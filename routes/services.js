@@ -25,8 +25,8 @@ module.exports = ({ getServices, getServicesById, addService }) => {
 
   // Create a new service
   router.post("/", (req, res) => {
-    const { name, description, imageUrl } = req.body;
-    addService(name, description, imageUrl)
+    const { name, description, image_url } = req.body;
+    addService(name, description, image_url)
       .then((service) => res.status(201).json(service))
       .catch((err) => res.status(500).json(err));
   });
