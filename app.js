@@ -12,6 +12,8 @@ const customersRouter = require("./routes/customers");
 const roomsRouter = require("./routes/rooms");
 const invoicesRouter = require("./routes/invoices");
 const servicesRouter = require("./routes/services");
+const reservationsRouter = require("./routes/reservations");
+const servicesReservedRouter = require("./routes/servicesReserved");
 
 const dbHelpers = require("./helpers/dbHelpers")(db);
 
@@ -26,6 +28,8 @@ app.use("/api/customers", customersRouter(dbHelpers));
 app.use("/api/rooms", roomsRouter(dbHelpers));
 app.use("/api/invoices", invoicesRouter(dbHelpers));
 app.use("/api/services", servicesRouter(dbHelpers));
+app.use("/api/reservations", reservationsRouter(dbHelpers));
+app.use("/api/servicesReserved", servicesReservedRouter(dbHelpers));
 
 // error handling middleware
 app.use((err, req, res, next) => {

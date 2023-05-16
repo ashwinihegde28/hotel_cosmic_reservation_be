@@ -3,7 +3,7 @@ const router = express.Router();
 // Import the dbhelper function and pass the db object to it
 const { getInvoices } = require("../helpers/dbHelpers")(require("../db"));
 
-module.exports = ({ getInvoices, getInvoicesById }) => {
+module.exports = ({ getInvoices, getInvoicesById, addInvoice }) => {
   // GET all invoices
   router.get("/", (req, res) => {
     getInvoices()
@@ -20,6 +20,14 @@ module.exports = ({ getInvoices, getInvoicesById }) => {
     const id = req.params.id;
     getInvoicesById(id)
       .then((data) => res.json(data))
+      .catch((err) => res.status(500).json(err));
+  });
+
+  // Create a new invoice
+  router.post("/", (req, res) => {
+    const { reservationId, description, dateGenerated } = req.body;
+    addInvoice(reservationId, description, dateGenerated)
+      .then((invoice) => res.status(201).json(invoice))
       .catch((err) => res.status(500).json(err));
   });
 
