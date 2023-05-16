@@ -58,14 +58,17 @@ module.exports = (db) => {
     },
 
     // Add a new invoice
-    addInvoice: (reservationId, description, dateGenerated) => {
+    addInvoice: (reservations_id, description, date_generated) => {
       const query = {
         text: "INSERT INTO invoices (reservations_id, description, date_generated) VALUES ($1, $2, $3) RETURNING *",
-        values: [reservationId, description, dateGenerated],
+        values: [reservations_id, description, date_generated],
       };
       return db
         .query(query)
-        .then((result) => result.rows[0])
+        .then((result) => {
+          console.log("%%%%% result", result);
+          return result.rows[0];
+        })
         .catch((err) => err);
     },
 
@@ -199,7 +202,7 @@ module.exports = (db) => {
     //get  all serviceReserved
     getServicesReserved: () => {
       const query = {
-        text: "SELECT * FROM service_reserved",
+        text: "SELECT * FROM services_reserved",
       };
       return db
         .query(query)
@@ -210,7 +213,7 @@ module.exports = (db) => {
     //get   serviceReserved by id
     getServicesReservedById: (id) => {
       const query = {
-        text: "SELECT * FROM service_reserved WHERE id = $1",
+        text: "SELECT * FROM services_reserved WHERE id = $1",
         values: [id],
       };
       return db
@@ -221,12 +224,14 @@ module.exports = (db) => {
 
     addServiceReserved: (reservations_id, service_id) => {
       const query = {
-        text: "INSERT INTO service_reserved (reservations_id, service_id) VALUES ($1, $2) RETURNING *",
+        text: "INSERT INTO services_reserved (reservations_id, service_id) VALUES ($1, $2) RETURNING *",
         values: [reservations_id, service_id],
       };
       return db
         .query(query)
-        .then((result) => result.rows[0])
+        .then((result) => {
+          return result.rows[0];
+        })
         .catch((err) => err);
     },
   };

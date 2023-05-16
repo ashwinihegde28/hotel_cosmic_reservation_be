@@ -9,7 +9,9 @@ module.exports = ({
   // GET all services_reserved
   router.get("/", (req, res) => {
     getServicesReserved()
-      .then((servicesReserved) => res.json(servicesReserved))
+      .then((servicesReserved) => {
+        res.json(servicesReserved);
+      })
       .catch((err) => res.status(500).json({ error: err.message }));
   });
 
@@ -23,8 +25,8 @@ module.exports = ({
 
   // POST a new service_reserved
   router.post("/", (req, res) => {
-    const { reservations_id, service_id } = req.body;
-    addServiceReserved(reservations_id, service_id)
+    const { reservations_id, services_id } = req.body;
+    addServiceReserved(reservations_id, services_id)
       .then((serviceReserved) => res.json(serviceReserved))
       .catch((err) => res.status(500).json({ error: err.message }));
   });

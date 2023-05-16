@@ -25,8 +25,8 @@ module.exports = ({ getInvoices, getInvoicesById, addInvoice }) => {
 
   // Create a new invoice
   router.post("/", (req, res) => {
-    const { reservationId, description, dateGenerated } = req.body;
-    addInvoice(reservationId, description, dateGenerated)
+    const { reservations_id, description, date_generated } = req.body;
+    addInvoice(reservations_id, description, date_generated)
       .then((invoice) => res.status(201).json(invoice))
       .catch((err) => res.status(500).json(err));
   });
