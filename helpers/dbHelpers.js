@@ -66,7 +66,6 @@ module.exports = (db) => {
       return db
         .query(query)
         .then((result) => {
-          console.log("%%%%% result", result);
           return result.rows[0];
         })
         .catch((err) => err);
