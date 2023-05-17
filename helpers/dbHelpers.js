@@ -58,10 +58,10 @@ module.exports = (db) => {
     },
 
     // Add a new invoice
-    addInvoice: (reservations_id, description, date_generated) => {
+    addInvoice: (reservations_id, description) => {
       const query = {
-        text: "INSERT INTO invoices (reservations_id, description, date_generated) VALUES ($1, $2, $3) RETURNING *",
-        values: [reservations_id, description, date_generated],
+        text: "INSERT INTO invoices (reservations_id, description) VALUES ($1, $2) RETURNING *",
+        values: [reservations_id, description],
       };
       return db
         .query(query)
