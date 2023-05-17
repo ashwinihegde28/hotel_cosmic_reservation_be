@@ -1,12 +1,15 @@
 module.exports = (db) => {
   return {
     getCustomers: () => {
+      console.log(`called`)
       const query = {
         text: "SELECT * FROM customers",
       };
       return db
         .query(query)
-        .then((result) => result.rows)
+        .then((result) => {
+          console.log(`result`, result) 
+          return result.rows } )
         .catch((err) => err);
     },
 
@@ -61,8 +64,9 @@ module.exports = (db) => {
     addInvoice: (reservations_id, description) => {
       const query = {
         text: "INSERT INTO invoices (reservations_id, description) VALUES ($1, $2) RETURNING *",
-        values: [reservations_id, description],
+        values: [reservations_id.id, description],
       };
+      console.log(`inside dB helper add invoice`, query)
       return db
         .query(query)
         .then((result) => {
@@ -188,10 +192,12 @@ module.exports = (db) => {
       roomId,
       totalPrice
     ) => {
+
       const query = {
         text: "INSERT INTO reservations (check_in_date, check_out_date, customer_id, room_id, total_price) VALUES ($1, $2, $3, $4, $5) RETURNING *",
         values: [checkInDate, checkOutDate, customerId, roomId, totalPrice],
       };
+      console.log(`inside dB helper`, query)
       return db
         .query(query)
         .then((result) => result.rows[0])

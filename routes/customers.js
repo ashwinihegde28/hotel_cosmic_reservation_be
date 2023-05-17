@@ -6,13 +6,15 @@ const { getCustomers } = require("../helpers/dbHelpers")(require("../db"));
 module.exports = ({ getCustomers, getCustomerById, addNewCustomer }) => {
   // GET all customers
   router.get("/", (req, res) => {
+    //console.log(`getcustomers`, getCustomers)
     getCustomers()
-      .then((customers) => res.json(customers))
-      .catch((err) =>
-        res.json({
-          error: err.message,
-        })
-      );
+      .then((customers) => {
+      //console.log(`customers`, customers)
+      res.json(customers)})
+      
+      .catch((err) => { 
+        console.error(err)
+        res.status(500).json(err)});  
   });
 
   // Get customer by id

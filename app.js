@@ -37,8 +37,8 @@ app.use((err, req, res, next) => {
   res.status(500).send("Internal server error");
 });
 
-app.listen(3001, () => {
-  console.log("Server listening on port 3001");
+app.listen(3002, () => {
+  console.log("Server listening on port 3002");
 });
 
 module.exports = app;
