@@ -9,7 +9,9 @@ module.exports = ({
   // GET all services_reserved
   router.get("/", (req, res) => {
     getServicesReserved()
-      .then((servicesReserved) => res.json(servicesReserved))
+      .then((servicesReserved) => {
+        res.json(servicesReserved);
+      })
       .catch((err) => res.status(500).json({ error: err.message }));
   });
 
