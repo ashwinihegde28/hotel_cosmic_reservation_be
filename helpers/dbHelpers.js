@@ -169,6 +169,7 @@ module.exports = (db) => {
 
     // Get reservation by ID
     getReservationById: (id) => {
+      const currentId = id
       const query = {
         text: "SELECT * FROM reservations WHERE id = $1",
         values: [id],
