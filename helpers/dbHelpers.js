@@ -58,16 +58,14 @@ module.exports = (db) => {
     },
 
     // Add a new invoice
-    addInvoice: (reservations_id, description) => {
+    addInvoice: (reservationId, description) => {
       const query = {
         text: "INSERT INTO invoices (reservations_id, description) VALUES ($1, $2) RETURNING *",
-        values: [reservations_id, description],
+        values: [reservationId, description],
       };
       return db
         .query(query)
-        .then((result) => {
-          return result.rows[0];
-        })
+        .then((result) => result.rows[0])
         .catch((err) => err);
     },
 
@@ -228,9 +226,7 @@ module.exports = (db) => {
       };
       return db
         .query(query)
-        .then((result) => {
-          return result.rows[0];
-        })
+        .then((result) => result.rows[0])
         .catch((err) => err);
     },
   };
