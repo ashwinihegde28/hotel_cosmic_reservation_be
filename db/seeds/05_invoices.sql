@@ -1,4 +1,4 @@
-INSERT INTO invoice (reservations_id, date_generated, description)
+INSERT INTO invoices (reservations_id, date_generated, description)
 VALUES
 (1, '2023-06-30', 'One month stay, spa services including massage and mars mud bath, restaurant bill total'),
 (2, '2023-07-14', 'One month stay, spa services including facial and mars mud bath, restaurant bill total'),
