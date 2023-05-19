@@ -4,12 +4,13 @@ module.exports = ({}) => {
   return {
     
     chargeCustomer: async (amount, currency, paymentMethod) => {
+      paymentMethod ? paymentMethod.id : null;
       try {
         const paymentIntent = await stripe.paymentIntents.create({
           amount,
           currency,
           automatic_payment_methods: {enabled: true},
-          payment_method: paymentMethod?.id,
+          payment_method: paymentMethod.id,
           confirm: false,
         });
         return paymentIntent.client_secret;
