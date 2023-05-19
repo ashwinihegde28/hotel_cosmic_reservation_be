@@ -61,7 +61,7 @@ module.exports = (db) => {
     addInvoice: (reservations_id, description) => {
       const query = {
         text: "INSERT INTO invoices (reservations_id, description) VALUES ($1, $2) RETURNING *",
-        values: [reservations_id.id, description],
+        values: [reservations_id, description],
       };
       console.log(`inside dB helper add invoice`, query);
       return db
