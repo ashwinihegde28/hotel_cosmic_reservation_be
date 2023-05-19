@@ -17,7 +17,6 @@ const servicesReservedRouter = require("./routes/servicesReserved");
 const paymentsRouter = require("./routes/payments");
 
 const dbHelpers = require("./helpers/dbHelpers")(db);
-const stripeHelpers = require("./helpers/stripeHelpers");
 
 app.use(logger("dev"));
 app.use(express.json());
