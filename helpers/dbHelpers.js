@@ -1,3 +1,5 @@
+const stripe = require('stripe')(process.env.REACT_APP_STRIPE_SECRET_KEY);
+
 module.exports = (db) => {
   return {
     getCustomers: () => {
@@ -28,8 +30,10 @@ module.exports = (db) => {
         text: "INSERT INTO customers (name, email) VALUES ($1, $2) RETURNING *",
         values: [name, email],
       };
+
       return db
         .query(query)
+
         .then((result) => result.rows[0])
         .catch((err) => err);
     },
@@ -63,7 +67,6 @@ module.exports = (db) => {
         text: "INSERT INTO invoices (reservations_id, description) VALUES ($1, $2) RETURNING *",
         values: [reservations_id, description],
       };
-      console.log(`inside dB helper add invoice`, query);
       return db
         .query(query)
         .then((result) => result.rows[0])
@@ -191,7 +194,6 @@ module.exports = (db) => {
         text: "INSERT INTO reservations (check_in_date, check_out_date, customer_id, room_id, total_price) VALUES ($1, $2, $3, $4, $5) RETURNING *",
         values: [checkInDate, checkOutDate, customerId, roomId, totalPrice],
       };
-      console.log(`inside dB helper`, query);
       return db
         .query(query)
         .then((result) => result.rows[0])
@@ -230,6 +232,22 @@ module.exports = (db) => {
         .query(query)
         .then((result) => result.rows[0])
         .catch((err) => err);
+    },
+
+   
+    chargeCustomer: async (amount, currency, paymentMethod) => {
+      try {
+        const paymentIntent = await stripe.paymentIntents.create({
+          amount,
+          currency,
+          automatic_payment_methods: {enabled: true},
+          payment_method: paymentMethod?.id,
+          confirm: false,
+        });
+        return paymentIntent.client_secret;
+      } catch (error) {
+        throw new Error('Payment intent error : ' + error.message);
+      } 
     },
   };
 };

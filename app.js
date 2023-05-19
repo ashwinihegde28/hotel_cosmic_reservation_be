@@ -14,6 +14,7 @@ const invoicesRouter = require("./routes/invoices");
 const servicesRouter = require("./routes/services");
 const reservationsRouter = require("./routes/reservations");
 const servicesReservedRouter = require("./routes/servicesReserved");
+const paymentsRouter = require("./routes/payments");
 
 const dbHelpers = require("./helpers/dbHelpers")(db);
 
@@ -30,6 +31,7 @@ app.use("/api/invoices", invoicesRouter(dbHelpers));
 app.use("/api/services", servicesRouter(dbHelpers));
 app.use("/api/reservations", reservationsRouter(dbHelpers));
 app.use("/api/servicesReserved", servicesReservedRouter(dbHelpers));
+app.use("/api/payments", paymentsRouter(dbHelpers));
 
 // error handling middleware
 app.use((err, req, res, next) => {
