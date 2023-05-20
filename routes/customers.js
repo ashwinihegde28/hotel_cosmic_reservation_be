@@ -1,10 +1,23 @@
 const express = require("express");
 const router = express.Router();
 // Import the dbhelper function and pass the db object to it
-const { getCustomers } = require("../helpers/dbHelpers")(require("../db"));
+const { getCustomers, getCustomerByEmail } = require("../helpers/dbHelpers")(require("../db"));
 
-module.exports = ({ getCustomers, getCustomerById, addNewCustomer }) => {
+module.exports = ({ getCustomers, getCustomerById, addNewCustomer, getCustomerByEmail }) => {
   // GET all customers
+
+  router.get("/email", (req, res) => {
+    const email = req.body
+
+    getCustomerByEmail(email)
+      .then((customers) => res.json(customers))
+      .catch((err) =>
+        res.json({
+          error: err.message,
+        })
+      );
+  });
+
   router.get("/", (req, res) => {
     getCustomers()
       .then((customers) => res.json(customers))
@@ -31,5 +44,9 @@ module.exports = ({ getCustomers, getCustomerById, addNewCustomer }) => {
       .catch((err) => res.status(500).json(err));
   });
 
+
+
   return router;
 };
+
+
