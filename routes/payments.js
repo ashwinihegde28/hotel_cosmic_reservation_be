@@ -9,7 +9,8 @@ module.exports = ({ chargeCustomer }) => {
 
   router.post("/", (req, res) => {
     const { amount, currency, paymentMethod } = req.body;
-    chargeCustomer(amount, currency, paymentMethod)
+    console.log(`req.body`, req.body)
+    chargeCustomer(amount, currency, paymentMethod.id)
       .then((client_secret) => res.status(201).json(client_secret))
       .catch((err) => { res.status(500).json(err) }
       );

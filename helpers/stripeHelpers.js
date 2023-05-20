@@ -13,6 +13,7 @@ module.exports = ({}) => {
           payment_method: paymentMethod.id,
           confirm: false,
         });
+        //console.log(`paymentIntent.client_secret`, paymentIntent.client_secret)
         return paymentIntent.client_secret;
       } catch (error) {
         throw new Error('Payment intent error : ' + error.message);
