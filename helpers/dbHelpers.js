@@ -38,6 +38,18 @@ module.exports = (db) => {
         .catch((err) => err);
     },
 
+    getCustomerByEmail: (email) => {
+      const query = {
+        text: "SELECT * FROM customers WHERE email = $1",
+        values: [email],
+      };
+      return db
+        .query(query)
+        .then((result) => result.rows)
+        .catch((err) => err);
+    },
+
+
     // Add a new customer
     addNewCustomer: (name, email) => {
       const query = {
@@ -47,7 +59,6 @@ module.exports = (db) => {
 
       return db
         .query(query)
-
         .then((result) => result.rows[0])
         .catch((err) => err);
     },
@@ -169,7 +180,7 @@ module.exports = (db) => {
       };
       return db
         .query(query)
-        .then((result) => result.rows)
+        .then((result) => result.rows[0])
         .catch((err) => err);
     },
 
