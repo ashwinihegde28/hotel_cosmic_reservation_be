@@ -1,4 +1,4 @@
-const stripe = require('stripe')(process.env.REACT_APP_STRIPE_SECRET_KEY);
+const stripe = require("stripe")(process.env.REACT_APP_STRIPE_SECRET_KEY);
 
 module.exports = (db) => {
   return {
@@ -12,15 +12,29 @@ module.exports = (db) => {
         .catch((err) => err);
     },
 
-    // get customers by email
+    // get customers by id
     getCustomerById: (id) => {
       const query = {
-        text: "SELECT * FROM customers WHERE id = $1",
+        text: `SELECT * FROM customers WHERE id = $1`,
         values: [id],
       };
       return db
         .query(query)
-        .then((result) => result.rows)
+        .then((result) => result.rows[0])
+        .catch((err) => err);
+    },
+
+    // get customers by email
+    getCustomerByEmail: (email) => {
+      const query = {
+        text: `SELECT * FROM customers WHERE email = $1`,
+        values: [email],
+      };
+      return db
+        .query(query)
+        .then((result) => {
+          return result.rows[0];
+        })
         .catch((err) => err);
     },
 
@@ -86,12 +100,12 @@ module.exports = (db) => {
 
     getRoomById: (id) => {
       const query = {
-        text: "SELECT * FROM rooms WHERE id = $1",
+        text: `SELECT * FROM rooms WHERE id = $1`,
         values: [id],
       };
       return db
         .query(query)
-        .then((result) => result.rows)
+        .then((result) => result.rows[0])
         .catch((err) => err);
     },
 
@@ -234,21 +248,20 @@ module.exports = (db) => {
         .catch((err) => err);
     },
 
-   
     chargeCustomer: async (amount, currency, paymentMethod) => {
       paymentMethod ? paymentMethod.id : null;
       try {
         const paymentIntent = await stripe.paymentIntents.create({
           amount,
           currency,
-          automatic_payment_methods: {enabled: true},
+          automatic_payment_methods: { enabled: true },
           payment_method: paymentMethod,
           confirm: false,
         });
         return paymentIntent.client_secret;
       } catch (error) {
-        throw new Error('Payment intent error : ' + error.message);
-      } 
+        throw new Error("Payment intent error : " + error.message);
+      }
     },
   };
 };
