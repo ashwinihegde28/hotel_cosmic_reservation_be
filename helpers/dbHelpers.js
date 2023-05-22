@@ -49,7 +49,6 @@ module.exports = (db) => {
         .catch((err) => err);
     },
 
-
     // Add a new customer
     addNewCustomer: (name, email) => {
       const query = {
@@ -111,12 +110,12 @@ module.exports = (db) => {
 
     getRoomById: (id) => {
       const query = {
-        text: `SELECT * FROM rooms WHERE id = $1`,
+        text: "SELECT * FROM rooms WHERE id = $1",
         values: [id],
       };
       return db
         .query(query)
-        .then((result) => result.rows[0])
+        .then((result) => result.rows)
         .catch((err) => err);
     },
 
